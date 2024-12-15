@@ -5,34 +5,136 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
     <style>
+        /* General Body and Layout */
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
+
         h1 {
+            color: #4CAF50;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
             color: #333;
         }
+
+        /* Task List Container */
+        .todo-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Task List */
         .task-list {
             list-style-type: none;
             padding: 0;
         }
+
         .task-item {
-            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease;
         }
-        .task-item input[type="text"] {
-            padding: 5px;
-            margin-right: 5px;
+
+        .task-item:hover {
+            background-color: #f1f1f1;
         }
-        .task-item button {
-            padding: 5px 10px;
+
+        .task-item span {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Buttons */
+        button, .task-item a {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 6px 12px;
             cursor: pointer;
-        }
-        .task-item a {
-            color: red;
-            margin-left: 10px;
             text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
         }
-        /* Modal styles */
+
+        button:hover, .task-item a:hover {
+            background-color: #45a049;
+        }
+
+        /* Delete All Button */
+        .delete-all-btn {
+            display: inline-block;
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+            text-align: center;
+        }
+
+        .delete-all-btn:hover {
+            background-color: #e53935;
+        }
+
+        /* Form Styles */
+        input[type="text"] {
+            padding: 10px;
+            width: calc(100% - 24px);
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -44,70 +146,74 @@
             overflow: auto;
             background-color: rgb(0, 0, 0);
             background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
         }
+
         .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
+            background-color: #fff;
+            margin: 5% auto;
             padding: 20px;
-            border: 1px solid #888;
+            border-radius: 5px;
             width: 80%;
+            max-width: 400px;
         }
+
         .close {
             color: #aaa;
-            float: right;
             font-size: 28px;
             font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
         }
+
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
+
     </style>
 </head>
 <body>
-    <h1>Todo List</h1>
 
-    <!-- Add New Task Form -->
-    <h2>Add New Task</h2>
-    <form action="/" method="POST">
-        <input type="text" name="task" placeholder="Enter task" required>
-        <button type="submit">Add Task</button>
-    </form>
+    <div class="todo-container">
+        <h1>Todo List</h1>
 
-    <!-- Delete All Tasks Button -->
-    <a href="{{ url_for('todo.delete_all_tasks_route') }}" style="color: red; display: block; margin-top: 20px;">Delete All Tasks</a>
+        <!-- Add New Task Form -->
+        <h2>Add Task</h2>
+        <form action="/" method="POST">
+            <input type="text" name="task" placeholder="Enter task" required>
+            <button type="submit">Add Task</button>
+        </form>
 
-    {% if error_message %}
-    <div class="alert alert-danger">{{ error_message }}</div>
-    {% endif %}
+        <!-- Delete All Tasks Button -->
+        <a href="{{ url_for('todo.delete_all_tasks_route') }}" class="delete-all-btn">Delete All Tasks</a>
 
-    <ul class="task-list">
-        {% for task in tasks %}
-            <li class="task-item">
-                <!-- Display task name -->
-                <span>{{ task[1] }}</span> <!-- task[1] assumes the task is a tuple with (id, task_name) -->
+        <!-- Task List -->
+        <ul class="task-list">
+            {% for task in tasks %}
+                <li class="task-item">
+                    <span>{{ task[1] }}</span>
+                    <button type="button" onclick="openModal({{ task[0] }}, '{{ task[1] }}')">Edit</button>
+                    <a href="{{ url_for('todo.delete_task_route', task_id=task[0]) }}">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
 
-                <!-- Edit Task Button -->
-                <button type="button" onclick="openModal({{ task[0] }}, '{{ task[1] }}')">Edit</button>
-
-                <!-- Delete Task Button -->
-                <a href="{{ url_for('todo.delete_task_route', task_id=task[0]) }}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <!-- Modal for Editing Task -->
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Edit Task</h2>
-            <form action="/" method="POST" id="editForm">
-                <input type="hidden" name="task_id" id="task_id">
-                <input type="text" name="new_task" id="new_task" required>
-                <button type="submit" name="action" value="update">Update</button>
-            </form>
+        <!-- Modal for Editing Task -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Edit Task</h2>
+                <form action="/" method="POST" id="editForm">
+                    <input type="hidden" name="task_id" id="task_id">
+                    <input type="text" name="new_task" id="new_task" required>
+                    <button type="submit" name="action" value="update">Update</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -131,5 +237,6 @@
             }
         }
     </script>
+
 </body>
 </html>
