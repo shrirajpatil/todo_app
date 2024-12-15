@@ -5,56 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
     <style>
-        /* General Body and Layout */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f9f9f9;
+        /* Global Styles */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
+            color: #333;
         }
 
         h1 {
             color: #4CAF50;
+            font-size: 2.5rem;
+            font-weight: 600;
             text-align: center;
-            font-size: 2rem;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        h2 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        /* Task List Container */
         .todo-container {
+            background: #fff;
+            padding: 40px;
+            max-width: 500px;
             width: 100%;
-            max-width: 600px;
-            background-color: #fff;
-            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        /* Task List */
+        .todo-container h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+            color: #4CAF50;
+        }
+
+        .todo-container input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            outline: none;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .todo-container input[type="text"]:focus {
+            border-color: #4CAF50;
+        }
+
+        .todo-container button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .todo-container button:hover {
+            background-color: #45a049;
+        }
+
         .task-list {
-            list-style-type: none;
-            padding: 0;
+            list-style: none;
+            margin-top: 30px;
         }
 
         .task-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #f9f9f9;
+            background-color: #fafafa;
             padding: 12px;
-            margin-bottom: 12px;
-            border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
         }
 
@@ -63,75 +99,46 @@
         }
 
         .task-item span {
-            font-size: 16px;
+            flex-grow: 1;
+            font-size: 1.1rem;
             color: #333;
         }
 
-        /* Buttons */
-        button, .task-item a {
-            background-color: #4CAF50;
-            color: white;
+        .task-item button {
+            background-color: #ff5f5f;
             border: none;
+            color: white;
             padding: 6px 12px;
+            font-size: 0.9rem;
+            border-radius: 5px;
             cursor: pointer;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 14px;
             transition: background-color 0.3s ease;
         }
 
-        button:hover, .task-item a:hover {
-            background-color: #45a049;
+        .task-item button:hover {
+            background-color: #e14e4e;
         }
 
-        /* Delete All Button */
+        .task-item button:focus {
+            outline: none;
+        }
+
         .delete-all-btn {
-            display: inline-block;
-            background-color: #f44336;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 14px;
-            margin-top: 20px;
-            text-align: center;
+            display: block;
             width: 100%;
             text-align: center;
+            background-color: #ff5f5f;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 6px;
+            color: #fff;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
         }
 
         .delete-all-btn:hover {
-            background-color: #e53935;
-        }
-
-        /* Form Styles */
-        input[type="text"] {
-            padding: 10px;
-            width: calc(100% - 24px);
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #4CAF50;
-        }
-
-        button {
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #45a049;
+            background-color: #e14e4e;
         }
 
         /* Modal Styles */
@@ -144,7 +151,6 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgb(0, 0, 0);
             background-color: rgba(0, 0, 0, 0.4);
             padding-top: 60px;
         }
@@ -153,8 +159,8 @@
             background-color: #fff;
             margin: 5% auto;
             padding: 20px;
-            border-radius: 5px;
-            width: 80%;
+            border-radius: 8px;
+            width: 90%;
             max-width: 400px;
         }
 
@@ -198,7 +204,7 @@
                 <li class="task-item">
                     <span>{{ task[1] }}</span>
                     <button type="button" onclick="openModal({{ task[0] }}, '{{ task[1] }}')">Edit</button>
-                    <a href="{{ url_for('todo.delete_task_route', task_id=task[0]) }}">Delete</a>
+                    <a href="{{ url_for('todo.delete_task_route', task_id=task[0]) }}" class="task-delete">Delete</a>
                 </li>
             {% endfor %}
         </ul>
@@ -218,19 +224,19 @@
     </div>
 
     <script>
-        // Function to open the modal and fill in the current task details
+        // Open Modal for Task Editing
         function openModal(taskId, taskName) {
             document.getElementById('task_id').value = taskId;
             document.getElementById('new_task').value = taskName;
             document.getElementById('editModal').style.display = "block";
         }
 
-        // Function to close the modal
+        // Close Modal
         function closeModal() {
             document.getElementById('editModal').style.display = "none";
         }
 
-        // Close modal if clicked outside of the modal content
+        // Close Modal if Clicked Outside
         window.onclick = function(event) {
             if (event.target == document.getElementById('editModal')) {
                 closeModal();
