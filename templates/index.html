@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .task-item {
+            margin: 10px 0;
+        }
+        .task-item input[type="text"] {
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .task-item button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .task-item a {
+            color: red;
+            margin-left: 10px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+
+    <!-- Add New Task Form -->
+    <h2>Add New Task</h2>
+    <form action="/" method="POST">
+        <input type="text" name="task" placeholder="Enter task" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <!-- Delete All Tasks Button -->
+    <a href="{{ url_for('todo.delete_all_tasks_route') }}" style="color: red; display: block; margin-top: 20px;">Delete All Tasks</a>
+    {% if error_message %}
+    <div class="alert alert-danger">{{ error_message }}</div>
+{% endif %}
+    <ul class="task-list">
+        {% for task in tasks %}
+            <li class="task-item">
+                <!-- Display task name -->
+                <span>{{ task[1] }}</span> <!-- task[1] assumes the task is a tuple with (id, task_name) -->
+
+                <!-- Edit Task Form -->
+                <form action="/" method="POST" style="display:inline;">
+                    <input type="hidden" name="task_id" value="{{ task[0] }}">
+                    <input type="text" name="new_task" value="{{ task[1] }}" required>
+                    <button type="submit" name="action" value="update">Update</button>
+                </form>
+
+                <!-- Delete Task Button -->
+                <a href="{{ url_for('todo.delete_task_route', task_id=task[0]) }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
