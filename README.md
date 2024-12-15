@@ -1,4 +1,4 @@
-# Todo App
+# To-Do Application
 
 A simple **To-Do Application** built using **Flask** and **PostgreSQL** for managing tasks. This application allows users to add, update, delete, and view tasks via both a web interface and a RESTful API. It is designed to be easy to set up and use.
 
