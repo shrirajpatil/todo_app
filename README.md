@@ -73,6 +73,8 @@ The application is deployed and accessible at the following URL:
 
 [https://todo-app-pr07.onrender.com/](https://todo-app-pr07.onrender.com/)
 
+**Note**: Loading the app on the hosted service may take some time as we are using the free plan on Render.
+
 ## Testing
 
 To run the tests for this application, follow these steps:
