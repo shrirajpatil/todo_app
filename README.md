@@ -87,8 +87,12 @@ To run the tests for this application, follow these steps:
    ```
 ## Running Tests with pytest-
 1. Make sure to install the required dependencies mentioned above.  
-2. Save your test file as `test_app.py` on your local machine.  
-3. Open a terminal or command prompt, navigate to the location of the `test_app.py` file, and run the following command:
+2. Save your test file as `test_app.py` on your local machine.
+3. Open a terminal or command prompt, navigate to the location of the `test_app.py` file by using the `cd` command. For example:
+   ```bash
+   cd /path/to/your/test/file
+   ```
+4. Open a terminal or command prompt, navigate to the location of the `test_app.py` file, and run the following command:
  ```bash
  pytest test_app.py
  ```
