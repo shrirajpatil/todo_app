@@ -4,7 +4,7 @@ from models import get_task_by_id  # Add this import statement
 
 
 # Create a Blueprint for the routes
-todo_bp = Blueprint('todo', _name_)
+todo_bp = Blueprint('todo', __name__)
 
 # Route to display tasks
 
