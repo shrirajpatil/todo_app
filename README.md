@@ -62,7 +62,7 @@ The application will be accessible at http://127.0.0.1:5000
 
 ## API Endpoints-  
 
--**GET /tasks**: Retrieve the list of all tasks.
+- **GET /tasks**: Retrieve the list of all tasks.
 - **POST /tasks**: Create a new task.
 - **GET /tasks/{id}**: Retrieve a specific task by its ID.
 - **PUT /tasks/{id}**: Update a specific task by its ID.
