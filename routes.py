@@ -1,56 +1,42 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from models import get_all_tasks, add_task, update_task, delete_task, delete_all_tasks
-from models import get_task_by_id  # Add this import statement
+from models import get_all_tasks, add_task, update_task, delete_task, delete_all_tasks, get_task_by_id
 
-
-# Create a Blueprint for the routes
 todo_bp = Blueprint('todo', __name__)
 
-# Route to display tasks
+# Add task (POST method)
+@todo_bp.route('/', methods=['POST'])
+def add_task_route():
+    task = request.form['task']
+    if task.strip():
+        add_task(task)
+        return '', 201  # Return status 201 for created task
+    return "Task cannot be empty", 400
 
-
-@todo_bp.route('/', methods=['GET', 'POST'])
-def todo_list():
-    if request.method == 'POST':
-        if 'task' in request.form:  # Add new task
-            task = request.form['task']
-            if task.strip():  # Ensure the task is not empty or just spaces
-                add_task(task)
-                return redirect(url_for('todo.todo_list'))
-            else:
-                # Handle the case where the task is empty
-                return "Task cannot be empty", 400  # Return a 400 status code for empty tasks
-        elif 'task_id' in request.form and 'new_task' in request.form:  # Update task
-            task_id = request.form['task_id']
-            new_task = request.form['new_task']
-            update_task(task_id, new_task)
-            return redirect(url_for('todo.todo_list'))
-
+# Get all tasks (GET method)
+@todo_bp.route('/', methods=['GET'])
+def get_tasks():
     tasks = get_all_tasks()
-    return render_template('index.html', tasks=tasks)
+    return {'tasks': tasks}, 200
 
+# Update task (POST method)
+@todo_bp.route('/', methods=['POST'])
+def update_task_route():
+    task_id = request.form['task_id']
+    new_task = request.form['new_task']
+    update_task(task_id, new_task)
+    return '', 200  # Status 200 for successful update
 
-
-### Route to delete a specific task
-#@todo_bp.route('/delete/<int:task_id>', methods=['GET'])
-##def delete_task_route(task_id):
-  ##  delete_task(task_id)
-    ##return redirect(url_for('todo.todo_list'))
-
-
-@todo_bp.route('/delete/<int:task_id>', methods=['GET'])
+# Delete a task (DELETE method)
+@todo_bp.route('/delete/<int:task_id>', methods=['DELETE'])
 def delete_task_route(task_id):
-    task = get_task_by_id(task_id)  # Now it will correctly reference the function
-    
+    task = get_task_by_id(task_id)
     if not task:
-        return "Invalid task ID", 404  # If task doesn't exist, return 404
-    
-    delete_task(task_id)  # Delete the task if it exists
-    return redirect(url_for('todo.todo_list'))  # Redirect after deletion
+        return "Invalid task ID", 404
+    delete_task(task_id)
+    return '', 204  # Status 204 for no content (successful delete)
 
-
-# Route to delete all tasks
-@todo_bp.route('/delete_all', methods=['GET'])
+# Delete all tasks (DELETE method)
+@todo_bp.route('/delete_all', methods=['DELETE'])
 def delete_all_tasks_route():
     delete_all_tasks()
-    return redirect(url_for('todo.todo_list'))
+    return '', 204  # Status 204 for successful delete all
