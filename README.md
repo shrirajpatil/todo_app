@@ -81,7 +81,7 @@ The application is deployed and accessible at the following URL:
 To run the tests for this application, follow these steps:
 
 1. **Install Testing Dependencies**  
-   If you haven't already, install the required dependencies for testing.
+   Install the required dependencies for testing.
    ```bash
    pip install pytest requests
    ```
