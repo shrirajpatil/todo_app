@@ -7,7 +7,7 @@ A simple **To-Do Application** built using **Flask** and **PostgreSQL** for mana
 
 ---
 
-## Features
+## Features-
 
 - **Add a New To-Do Task**: Users can create new tasks.
 - **Display List of To-Do Tasks**: View all tasks currently stored in the database.
@@ -17,7 +17,7 @@ A simple **To-Do Application** built using **Flask** and **PostgreSQL** for mana
 
 ---
 
-## Tech Stack
+## Tech Stack-
 
 - **Backend**: Python (Flask)
 - **Database**: PostgreSQL
@@ -25,7 +25,7 @@ A simple **To-Do Application** built using **Flask** and **PostgreSQL** for mana
 
 ---
 
-## Setup Instructions
+## Setup Instructions-
 
 1.Clone the repository to your local machine using the following command:
 
@@ -60,7 +60,7 @@ The application will be accessible at http://127.0.0.1:5000
 
 ---
 
-## API Endpoints
+## API Endpoints-
  -**GET /tasks**: Retrieve the list of all tasks.
 - **POST /tasks**: Create a new task.
 - **GET /tasks/{id}**: Retrieve a specific task by its ID.
@@ -68,14 +68,14 @@ The application will be accessible at http://127.0.0.1:5000
 - **DELETE /tasks/{id}**: Delete a specific task by its ID.
 - **DELETE /tasks**: Delete all tasks.
 
-## Deployment
+## Deployment-
 The application is deployed and accessible at the following URL:
 
 [https://todo-app-pr07.onrender.com/](https://todo-app-pr07.onrender.com/)
 
 **Note**: Loading the app on the hosted service may take some time as we are using the free plan on Render.
 
-## Testing
+## Testing-
 
 To run the tests for this application, follow these steps:
 
@@ -84,7 +84,7 @@ To run the tests for this application, follow these steps:
    ```bash
    pip install pytest requests
    ```
-## Running Tests with pytest
+## Running Tests with pytest-
 1. Make sure to install the required dependencies mentioned above.  
 2. Save your test file as `test_app.py` on your local machine.  
 3. Open a terminal or command prompt, navigate to the location of the `test_app.py` file, and run the following command:
@@ -97,7 +97,7 @@ To run the tests for this application, follow these steps:
 ```
 ![5d8aa84f-0e46-4495-876f-fc97b9c58002](https://github.com/user-attachments/assets/03b2cfb2-92b2-46b0-b51d-990262fee308)
 
-## Test Cases made for this To-Do Application
+## Test Cases made for this To-Do Application-
 - **Test retrieving all tasks when no tasks exist**
 - **Test adding a new task**
 - **Test updating an existing task**
