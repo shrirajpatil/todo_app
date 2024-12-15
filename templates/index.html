@@ -5,143 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
     <style>
-        /* Global Styles */
-        * {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            color: #333;
         }
-
-        h1 {
-            color: #4CAF50;
-            font-size: 2.5rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .todo-container {
-            background: #fff;
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
+        .container {
+            background-color: #fff;
+            width: 350px;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-
-        .todo-container h2 {
-            font-size: 1.5rem;
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        h2 {
+            color: #555;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            display: flex;
             margin-bottom: 15px;
-            font-weight: 500;
-            color: #4CAF50;
         }
-
-        .todo-container input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            font-size: 1rem;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            outline: none;
-            margin-bottom: 20px;
-            transition: border-color 0.3s ease;
+        .form-group input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
         }
-
-        .todo-container input[type="text"]:focus {
-            border-color: #4CAF50;
-        }
-
-        .todo-container button {
-            width: 100%;
-            padding: 12px;
-            font-size: 1rem;
+        .form-group button {
+            padding: 10px 15px;
             background-color: #4CAF50;
-            color: #fff;
+            color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
         }
-
-        .todo-container button:hover {
+        .form-group button:hover {
             background-color: #45a049;
         }
-
         .task-list {
-            list-style: none;
-            margin-top: 30px;
+            list-style-type: none;
+            padding: 0;
         }
-
         .task-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #fafafa;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
         }
-
-        .task-item:hover {
-            background-color: #f1f1f1;
-        }
-
         .task-item span {
-            flex-grow: 1;
-            font-size: 1.1rem;
-            color: #333;
+            flex: 1;
         }
-
-        .task-item button {
-            background-color: #ff5f5f;
-            border: none;
-            color: white;
-            padding: 6px 12px;
-            font-size: 0.9rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .task-item button:hover {
-            background-color: #e14e4e;
-        }
-
-        .task-item button:focus {
-            outline: none;
-        }
-
-        .delete-all-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background-color: #ff5f5f;
-            padding: 12px;
-            font-size: 1rem;
-            border-radius: 6px;
-            color: #fff;
+        .task-item a {
+            color: #e74c3c;
             text-decoration: none;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
+            margin-left: 10px;
         }
-
-        .delete-all-btn:hover {
-            background-color: #e14e4e;
+        .task-item button {
+            padding: 5px 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
-
-        /* Modal Styles */
+        .task-item button:hover {
+            background-color: #2980b9;
+        }
+        .alert {
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
         .modal {
             display: none;
             position: fixed;
@@ -150,99 +98,94 @@
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
             background-color: rgba(0, 0, 0, 0.4);
-            padding-top: 60px;
         }
-
         .modal-content {
             background-color: #fff;
-            margin: 5% auto;
+            margin: 15% auto;
             padding: 20px;
-            border-radius: 8px;
-            width: 90%;
+            width: 80%;
             max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
-
         .close {
             color: #aaa;
+            float: right;
             font-size: 28px;
             font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            cursor: pointer;
         }
-
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
-
     </style>
 </head>
 <body>
-
-    <div class="todo-container">
+    <div class="container">
         <h1>Todo List</h1>
 
         <!-- Add New Task Form -->
-        <h2>Add Task</h2>
+        <h2>Add New Task</h2>
         <form action="/" method="POST">
-            <input type="text" name="task" placeholder="Enter task" required>
-            <button type="submit">Add Task</button>
+            <div class="form-group">
+                <input type="text" name="task" placeholder="Enter task" required>
+                <button type="submit">Add Task</button>
+            </div>
         </form>
 
         <!-- Delete All Tasks Button -->
-        <a href="{{ url_for('todo.delete_all_tasks_route') }}" class="delete-all-btn">Delete All Tasks</a>
+        <a href="{{ url_for('todo.delete_all_tasks_route') }}" style="display: block; text-align: center; color: #e74c3c; font-weight: bold; text-decoration: none; margin-top: 20px;">Delete All Tasks</a>
 
-        <!-- Task List -->
+        {% if error_message %}
+        <div class="alert">{{ error_message }}</div>
+        {% endif %}
+
         <ul class="task-list">
             {% for task in tasks %}
-                <li class="task-item">
-                    <span>{{ task[1] }}</span>
-                    <button type="button" onclick="openModal({{ task[0] }}, '{{ task[1] }}')">Edit</button>
-                    <a href="{{ url_for('todo.delete_task_route', task_id=task[0]) }}" class="task-delete">Delete</a>
-                </li>
+            <li class="task-item">
+                <span>{{ task[1] }}</span> <!-- task[1] assumes the task is a tuple with (id, task_name) -->
+                <button type="button" onclick="openModal({{ task[0] }}, '{{ task[1] }}')">Edit</button>
+                <a href="{{ url_for('todo.delete_task_route', task_id=task[0]) }}">Delete</a>
+            </li>
             {% endfor %}
         </ul>
+    </div>
 
-        <!-- Modal for Editing Task -->
-        <div id="editModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h2>Edit Task</h2>
-                <form action="/" method="POST" id="editForm">
-                    <input type="hidden" name="task_id" id="task_id">
-                    <input type="text" name="new_task" id="new_task" required>
-                    <button type="submit" name="action" value="update">Update</button>
-                </form>
-            </div>
+    <!-- Modal for Editing Task -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Edit Task</h2>
+            <form action="/" method="POST" id="editForm">
+                <input type="hidden" name="task_id" id="task_id">
+                <input type="text" name="new_task" id="new_task" required>
+                <button type="submit" name="action" value="update">Update</button>
+            </form>
         </div>
     </div>
 
     <script>
-        // Open Modal for Task Editing
+        // Function to open the modal and fill in the current task details
         function openModal(taskId, taskName) {
             document.getElementById('task_id').value = taskId;
             document.getElementById('new_task').value = taskName;
             document.getElementById('editModal').style.display = "block";
         }
 
-        // Close Modal
+        // Function to close the modal
         function closeModal() {
             document.getElementById('editModal').style.display = "none";
         }
 
-        // Close Modal if Clicked Outside
+        // Close modal if clicked outside of the modal content
         window.onclick = function(event) {
             if (event.target == document.getElementById('editModal')) {
                 closeModal();
             }
         }
     </script>
-
 </body>
 </html>
