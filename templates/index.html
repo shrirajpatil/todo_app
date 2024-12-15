@@ -45,10 +45,14 @@
     </form>
 
     <!-- Delete All Tasks Button -->
-    <a href="{{ url_for('todo.delete_all_tasks_route') }}" style="color: red; display: block; margin-top: 20px;">Delete All Tasks</a>
+    <form action="{{ url_for('todo.delete_all_tasks_route') }}" method="POST" style="display:inline;">
+        <button type="submit" style="color: red; margin-top: 20px;">Delete All Tasks</button>
+    </form>
+
     {% if error_message %}
-    <div class="alert alert-danger">{{ error_message }}</div>
-{% endif %}
+        <div class="alert alert-danger">{{ error_message }}</div>
+    {% endif %}
+
     <ul class="task-list">
         {% for task in tasks %}
             <li class="task-item">
@@ -63,7 +67,9 @@
                 </form>
 
                 <!-- Delete Task Button -->
-                <a href="{{ url_for('todo.delete_task_route', task_id=task[0]) }}">Delete</a>
+                <form action="{{ url_for('todo.delete_task_route', task_id=task[0]) }}" method="POST" style="display:inline;">
+                    <button type="submit" style="color: red;">Delete</button>
+                </form>
             </li>
         {% endfor %}
     </ul>
